@@ -13,8 +13,8 @@
           {text: '年龄', key: 'age'},
           {text: '性别', key: 'sex'}],
         list: [
-          {name: '李泽泽', age: 12, sex: '男'},
-          {name: '李泽泽', age: 12, sex: '男'}, {name: '李泽泽', age: 12, sex: '男'}, {name: '李泽泽', age: 12, sex: '男'}
+          {name: '张三', age: 12, sex: '男'},
+          {name: '李四', age: 13, sex: '男'}, {name: '王五', age: 22, sex: '男'}, {name: '孙六', age: 12, sex: '男'}
         ]
       }
     }
