@@ -4,10 +4,9 @@ const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
 
-function resolve (dir) {
+function resolve(dir) {
   return path.join(__dirname, '..', dir)
 }
-
 
 
 module.exports = {
@@ -22,6 +21,8 @@ module.exports = {
       ? config.build.assetsPublicPath
       : config.dev.assetsPublicPath
   },
+
+
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
@@ -30,6 +31,18 @@ module.exports = {
     }
   },
   module: {
+
+
+    loaders: [
+      {
+        test: /\.js$/,
+        exclude: /(node_modules|bower_components)/,
+        loader: 'babel',
+        query: {
+          presets: ['es2015']
+        }
+      }
+    ],
     rules: [
       {
         test: /\.vue$/,

@@ -1,39 +1,22 @@
 <template>
-  <div id="app" class="clearfix">
-    <header>
-      <div class="head-inner clearfix">
-        <div class="logo">
-          <img src="./assets/logo.png" alt="">
+  <div id="app">
 
-        </div>
-        <nav>
-          <ul class="clearfix">
-            <li><a href="#">登陆</a></li>
-            <li class="nav-pile">|</li>
-            <li><a href="#">注册</a></li>
-            <li class="nav-pile">|</li>
-            <li><a href="#">关于</a></li>
-          </ul>
 
-        </nav>
-      </div>
-    </header>
+  <router-view></router-view>
 
-     <footer>
 
-       © 2016 fishenal MIT
-     </footer>
   </div>
 </template>
 
 <script>
+
   export default {
     name: 'App',
-    data: {}
+
   }
 </script>
 
-<style>
+<style  >
 
 
   * {
@@ -51,72 +34,14 @@
     /*margin-top: 10px;*/
   }
 
-  a {
-
-    text-decoration: none;
-    color: inherit;
+  .page-tool{
+    text-align: left;
+     margin: 20px auto;
   }
 
-  li {
-    list-style: none;
-  }
+   .page{
 
-  .clearfix:after {
-    content: ".";
-    display: block;
-    height: 0;
-    clear: both;
-    visibility: hidden
-  }
-
-  header {
-
-    background: #363636;
-  }
-
-  header .logo {
-    float: left;
-    display: inline-block;
-  }
-
-  header .logo img {
-
-    width: 50px;
-    margin: 15px 120px;
-
-  }
-
-  header nav {
-    display: inline-block;
-    float: right;
-
-  }
-
-  header nav ul {
-
-    margin: 27px 120px;
-  }
-
-  header nav ul li {
-
-    float: left;
-    color: #B0AA9E;
-
-    font-size: 14px;
-
-  }
-
-  .nav-pile {
-    padding: 0px 10px;
-  }
-
-   footer{
-
-
-     background: #E3E4E8;
-     line-height: 30px;
-      margin-top: 30px;
-     padding: 40px 0px;
-     text-align: center;
+       margin: 20px;
    }
+
 </style>
