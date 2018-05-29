@@ -63,8 +63,8 @@
       search() {
         var $this = this;
         this.getJson(this.dataQueryUrl, function (data) {
-           console.log(data.list)
-          $this.tableData = data.list
+           console.log(data)
+          $this.tableData = data
         })
       }
     }, created() {
