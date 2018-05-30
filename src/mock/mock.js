@@ -9,7 +9,8 @@ Mock.mock(/users/, {
       name: '@cname',
       address:'@county',
       email:'@email',
-      dept:'@csentence(3)'
+      dept:'@csentence(3)',
+      id:'@id'
     }
 
   ]

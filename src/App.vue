@@ -2,7 +2,7 @@
   <div id="app">
 
 
-  <router-view></router-view>
+    <router-view></router-view>
 
 
   </div>
@@ -16,7 +16,7 @@
   }
 </script>
 
-<style  >
+<style>
 
 
   * {
@@ -34,14 +34,18 @@
     /*margin-top: 10px;*/
   }
 
-  .page-tool{
+  .page-tool {
     text-align: left;
-     margin: 20px auto;
+    margin: 20px auto;
   }
 
-   .page{
+  .page {
 
-       margin: 20px;
-   }
+    margin: 20px;
+  }
 
+  .page .page-content .content-footer {
+    text-align: right;
+    margin: 19px;
+  }
 </style>

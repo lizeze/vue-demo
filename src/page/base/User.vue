@@ -1,8 +1,9 @@
 <template>
   <div class="page">
     <div class="page-tool">
-      <search-form :dataQueryUrl="dataQueryUrl" :search-list="searchList" :columns="columns"></search-form>
+      <base-table :dataQueryUrl="dataQueryUrl" :search-list="searchList" :columns="columns"></base-table>
 
+        <!--<base-form></base-form>-->
     </div>
     <div class="page-content">
 
@@ -17,12 +18,13 @@
 </template>
 
 <script>
-  import SearchForm from "../../components/base/SearchForm";
+  import BaseTable from "../../components/base/Table";
+  import BaseForm from "../../components/base/Form";
 
   export default {
 
     name: 'UserInfo',
-    components: {SearchForm},
+    components: {BaseForm, BaseTable},
     data() {
       return {
 
