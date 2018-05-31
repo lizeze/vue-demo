@@ -14,6 +14,8 @@
           <el-button type="primary" size="small" icon="el-icon-search" @click="search">查询</el-button>
           <el-button type="primary" size="small" icon="el-icon-circle-plus" @click="dialogFormVisible = true">新增
           </el-button>
+          <el-button type="danger" size="small" icon="el-icon-delete" @click="deleteData">删除</el-button>
+
         </el-form-item>
       </el-form>
     </div>
@@ -21,13 +23,23 @@
       <div class="content-body">
         <el-table
           :data="tableData"
+          @selection-change="handleSelectionChange">
           stripe
-          row-key="id"
-          style="width: 100%" align="center">
+          row-key="roleId"
+          style="width: 100%" align="center"
+          :size="size">
+
+          <el-table-column
+            type="selection"
+            width="55">
+          </el-table-column>
           <el-table-column v-for="item in columns"
                            :prop="item.filed"
                            :label="item.name"
                            :key="item.filed"
+                           :size="size"
+                           sortable
+                           :formatter="item.type==1?dateFormat:null"
           >
           </el-table-column>
         </el-table>
@@ -37,7 +49,7 @@
           background
           layout="prev, pager, next,jumper,sizes,total"
           :page-sizes="pageSizes"
-          :total="100"
+          :total="total"
           @prev-click="prevclick"
           @next-click="nextclick"
           @current-change="currentchange"
@@ -46,21 +58,11 @@
       </div>
     </div>
 
-    <el-dialog title="收货地址" :visible.sync="dialogFormVisible">
-      <el-form label-position="right" label-width="100px">
-        <el-form-item label="名称">
-          <el-input size="small"></el-input>
-        </el-form-item>
-        <el-form-item label="活动区域">
-          <el-input></el-input>
-        </el-form-item>
-        <el-form-item label="活动形式">
-          <el-input></el-input>
-        </el-form-item>
-      </el-form>
+    <el-dialog  :visible.sync="dialogFormVisible">
+      <base-form :filedList="filedList" v-on:submit-form="submitForm" :title="title"></base-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+        <el-button type="primary">确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -68,9 +70,14 @@
 
 </template>
 <script>
+  // import moment from 'vue-moment'
+
+  import BaseForm from "./Form";
+
   export default {
     name: 'BaseTable',
-    props: ['searchList', 'columns', 'dataQueryUrl'],
+    components: {BaseForm},
+    props: ['searchList', 'columns', 'dataQueryUrl', 'filedList', 'dataSaveUrl', 'dataDeleteUrl'],
     data() {
       let searchModal = {};
       this.searchList.forEach(function (item) {
@@ -80,9 +87,14 @@
 
       return {
         searchModal,
+        title:'新增角色',
+        multipleSelection: [],
+        size: 'small',
         tableData: [],
         pageSizes: [10, 15, 20, 25],
         pageIndex: 1,
+        pageSize: 10,
+        total: 0,
         dialogFormVisible: false,
         form: {
           name: '',
@@ -96,26 +108,89 @@
         }
       }
     }, methods: {
+
+
+      deleteData() {
+        var $this = this;
+        if (this.multipleSelection.length <= 0) {
+          this.alertWarning('未选择项');
+          return
+        }
+
+        $this.confirm('确认删除吗', function () {
+          $this.postJson($this.dataDeleteUrl, $this.multipleSelection, function (data) {
+            $this.alertSuccess('删除成功');
+            $this.search();
+
+          })
+        })
+
+
+      },
+      handleSelectionChange(val) {
+        this.multipleSelection = val;
+
+        console.log(val)
+      },
       prevclick(pageIndex) {
         if (this.pageIndex == pageIndex) return
         this.pageIndex = pageIndex
+        this.search();
       },
       nextclick(pageIndex) {
         if (this.pageIndex == pageIndex) return
         this.pageIndex = pageIndex
+        this.search();
+
       },
       currentchange(pageIndex) {
         if (this.pageIndex == pageIndex) return
         this.pageIndex = pageIndex
+        this.search();
+
       },
       sizechange(pageSize) {
+        this.pageSize = pageSize;
+        this.search();
+
+      },
+
+
+      submitForm: function (model) {
+
+        this.postJson(this.dataSaveUrl, model, function (data) {
+
+        })
+
+
+      },
+      getSearchModal() {
+        let searchMod = {
+          pageSize: this.pageSize,
+          pageIndex: this.pageIndex,
+          orderField: 'roleId',
+          isAsc: 'true',
+          fields: []
+        };
+        for (var item in this.searchModal) {
+          searchMod.fields.push({field: item, value: this.searchModal[item]});
+
+        }
+        return searchMod;
 
       },
       search() {
         var $this = this;
-        this.postJson(this.dataQueryUrl, this.searchModal, function (data) {
-          $this.tableData = data
+        this.postJson(this.dataQueryUrl, this.getSearchModal(), function (data) {
+          $this.tableData = data.content;
+          $this.total = data.totalElements;
         })
+      },
+      dateFormat: function (row, column) {
+
+        if (row.createDate == null) return '';
+
+        return this.$moment(new Date(row.createDate)).format("YYYY-MM-DD HH:mm");
       }
     }, created() {
 
