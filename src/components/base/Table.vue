@@ -12,7 +12,7 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" size="small" icon="el-icon-search" @click="search">查询</el-button>
-          <el-button type="primary" size="small" icon="el-icon-circle-plus" @click="dialogFormVisible = true">新增
+          <el-button type="primary" size="small" icon="el-icon-circle-plus" @click="handleAdd">新增
           </el-button>
           <el-button type="danger" size="small" icon="el-icon-delete" @click="deleteData">删除</el-button>
 
@@ -23,15 +23,19 @@
       <div class="content-body">
         <el-table
           :data="tableData"
-          @selection-change="handleSelectionChange">
+          @selection-change="handleSelectionChange"
           stripe
           row-key="roleId"
-          style="width: 100%" align="center"
+          style="width: 100%"
+          align="center"
           :size="size">
-
           <el-table-column
             type="selection"
             width="55">
+          </el-table-column>
+          <el-table-column
+            type="index"
+          >
           </el-table-column>
           <el-table-column v-for="item in columns"
                            :prop="item.filed"
@@ -41,6 +45,16 @@
                            sortable
                            :formatter="item.type==1?dateFormat:null"
           >
+          </el-table-column>
+
+          <el-table-column label="操作">
+            <template slot-scope="scope">
+              <el-button
+                size="mini"
+                @click="handleEdit(scope.$index, scope.row)">编辑
+              </el-button>
+
+            </template>
           </el-table-column>
         </el-table>
       </div>
@@ -58,12 +72,10 @@
       </div>
     </div>
 
-    <el-dialog  :visible.sync="dialogFormVisible">
-      <base-form :filedList="filedList" v-on:submit-form="submitForm" :title="title"></base-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary">确 定</el-button>
-      </div>
+    <el-dialog :visible.sync="dialogFormVisible">
+      <base-form ref="form" :filedList="filedList" v-on:submit-form="submitForm" :title="title"
+                 :formData="editData"></base-form>
+
     </el-dialog>
   </div>
 
@@ -87,7 +99,8 @@
 
       return {
         searchModal,
-        title:'新增角色',
+        title: '新增角色',
+        editData: {},
         multipleSelection: [],
         size: 'small',
         tableData: [],
@@ -108,8 +121,25 @@
         }
       }
     }, methods: {
+      handleEdit(index, row) {
+        this.title = "修改角色";
+        let mod = {};
+        for (let i = 0; i < this.filedList.length; i++) {
+          let element = this.filedList[i];
+          mod[element.filed] = row[element.filed]
+        }
+        this.editData = mod;
+        this.dialogFormVisible = true
 
 
+      },
+      handleAdd() {
+        this.dialogFormVisible = true;
+        this.title = "新增角色";
+        this.editData = null;
+
+
+      },
       deleteData() {
         var $this = this;
         if (this.multipleSelection.length <= 0) {
@@ -157,8 +187,11 @@
 
 
       submitForm: function (model) {
-
+        let $this = this;
         this.postJson(this.dataSaveUrl, model, function (data) {
+          $this.alertSuccess('保存成功')
+          $this.dialogFormVisible = false
+          $this.search()
 
         })
 
@@ -192,7 +225,10 @@
 
         return this.$moment(new Date(row.createDate)).format("YYYY-MM-DD HH:mm");
       }
-    }, created() {
+    }
+    , computed() {
+    }
+    , created() {
 
       this.search();
     }

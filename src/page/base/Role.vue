@@ -2,7 +2,7 @@
   <div class="page">
 
     <base-table :columns="columns" :search-list="searchList" :data-query-url="dataQueryUrl" :filedList="filedList"
-                :dataSaveUrl="dataSaveUrl" :dataDeleteUrl="dataDeleteUrl">
+                :dataSaveUrl="dataSaveUrl" :dataDeleteUrl="dataDeleteUrl" >
 
     </base-table>
 
@@ -35,12 +35,20 @@
           name: '描述',
           filed: 'roleDescribe',
           value: ''
-        }]
+        },{name:'创建时间',filed:'createDate',key:true}]
 
 
       }
 
 
+    },methods:{
+
+
+      deleteData(){
+
+        this.zeze=!this.zeze
+
+      }
     }
 
   }

@@ -7,18 +7,16 @@
 
       <el-aside style="width: 200px">
         <el-menu default-active="1-4-1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose"
-                 :collapse="isCollapse" :unique-opened="uniqueOpened" background-color="#F6F6F6">
+                 :collapse="isCollapse" :unique-opened="uniqueOpened" background-color="#F6F6F6" router="true">
           <el-submenu index="1">
             <template slot="title">
 
-              <span slot="title">导航一</span>
+              <span slot="title">系统设置</span>
             </template>
-            <el-menu-item index="1-1">选项1</el-menu-item>
-            <el-menu-item index="1-2">选项2</el-menu-item>
-            <el-menu-item index="1-3">选项3</el-menu-item>
-            <el-menu-item index="1-4">选项4</el-menu-item>
-            <el-menu-item index="1-5">选项5</el-menu-item>
-            <el-menu-item index="1-6">选项6</el-menu-item>
+            <el-menu-item index="role">角色</el-menu-item>
+            <el-menu-item index="page">页面</el-menu-item>
+
+
           </el-submenu>
 
 

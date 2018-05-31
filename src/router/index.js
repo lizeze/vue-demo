@@ -4,6 +4,7 @@ import App from '../App'
 import Element from 'element-ui';
 import UserInfo from '../page/base/User';
 import IndexPage from '../page/index';
+import PageManager from '../page/base/Page'
 import Role from '../page/base/Role'
 import axios from 'axios'
 import 'element-ui/lib/theme-chalk/index.css';
@@ -72,9 +73,9 @@ export default new Router({
           component: UserInfo
         },
         {
-          path: 'baseform',
-          name: 'UserInfo',
-          component: UserInfo
+          path: 'page',
+          name: 'page',
+          component: PageManager
         },
         {
           path: 'role',
