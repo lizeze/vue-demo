@@ -226,8 +226,7 @@
         return this.$moment(new Date(row.createDate)).format("YYYY-MM-DD HH:mm");
       }
     }
-    , computed() {
-    }
+
     , created() {
 
       this.search();

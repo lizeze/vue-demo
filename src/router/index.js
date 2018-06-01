@@ -6,6 +6,7 @@ import UserInfo from '../page/base/User';
 import IndexPage from '../page/index';
 import PageManager from '../page/base/Page'
 import Role from '../page/base/Role'
+import  BugInfo from  '../page/bug/AddBug'
 import axios from 'axios'
 import 'element-ui/lib/theme-chalk/index.css';
 import moment from "moment";
@@ -13,7 +14,6 @@ import mock from '../mock/mock'
 
 Vue.prototype.$moment = moment;
 Vue.use(Element);
-Vue.use(Router)
 Vue.use(Router)
 const ip = "http://localhost:8081/";
 Vue.prototype.getJson = function (url, callback) {
@@ -81,6 +81,11 @@ export default new Router({
           path: 'role',
           name: 'Role',
           component: Role
+        },
+        {
+          path: 'bug',
+          name: 'Bug',
+          component: BugInfo
         }
       ]
     },

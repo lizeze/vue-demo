@@ -7,7 +7,7 @@
 
       <el-aside style="width: 200px">
         <el-menu default-active="1-4-1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose"
-                 :collapse="isCollapse" :unique-opened="uniqueOpened" background-color="#F6F6F6" router="true">
+                 :collapse="isCollapse" :unique-opened="uniqueOpened" background-color="#F6F6F6" :router="isRouter">
           <el-submenu index="1">
             <template slot="title">
 
@@ -15,6 +15,7 @@
             </template>
             <el-menu-item index="role">角色</el-menu-item>
             <el-menu-item index="page">页面</el-menu-item>
+            <el-menu-item index="bug">Bug</el-menu-item>
 
 
           </el-submenu>
@@ -47,7 +48,9 @@
             <el-breadcrumb-item>活动详情</el-breadcrumb-item>
           </el-breadcrumb>
         </div>
+        <keep-alive>
         <router-view></router-view>
+        </keep-alive>
       </el-main>
     </el-container>
   </el-container>
@@ -64,7 +67,8 @@
 
       return {
         isCollapse: false,
-        uniqueOpened: true
+        uniqueOpened: true,
+        isRouter:true
 
 
       }
@@ -112,6 +116,7 @@
     padding: 0px;
 
     margin: 0px;
+    background: #FFFFFF;
   }
 
   .breadcrumb {

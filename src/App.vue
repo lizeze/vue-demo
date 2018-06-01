@@ -48,4 +48,13 @@
     text-align: right;
     margin: 19px;
   }
+
+  .portlet .box {
+
+    box-shadow: 0px 1px 7px 0px rgba(0, 0, 0, 0.75);
+    min-height: 500px;
+
+  }
+
+
 </style>

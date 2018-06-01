@@ -9,7 +9,7 @@
 
       <el-form :model="view" label-width="100px" ref="ruleForm">
         <el-form-item :label="item.name" :prop="item.filed" v-for="item in filedList" v-if="!item.key">
-          <el-input v-if="!item.key" v-model="model[item.filed]" :placeholder="item.name"></el-input>
+          <el-input v-if="!item.show" v-model="model[item.filed]" :placeholder="item.name"></el-input>
         </el-form-item>
 
         <el-form-item>
