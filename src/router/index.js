@@ -1,16 +1,15 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import App from '../App'
 import Element from 'element-ui';
 import UserInfo from '../page/base/User';
 import IndexPage from '../page/index';
 import PageManager from '../page/base/Page'
 import Role from '../page/base/Role'
-import  BugInfo from  '../page/bug/AddBug'
+import BugInfo from '../page/bug/AddBug'
+import BugList from '../page/bug/BugList'
 import axios from 'axios'
 import 'element-ui/lib/theme-chalk/index.css';
 import moment from "moment";
-import mock from '../mock/mock'
 
 Vue.prototype.$moment = moment;
 Vue.use(Element);
@@ -31,6 +30,20 @@ Vue.prototype.postJson = function (url, data, callback) {
   })
 }
 
+Vue.prototype.modularData = function () {
+
+
+  return [
+
+    {text: '罐区监控', value: 1},
+    {text: '装置监控', value: 2},
+    {text: '物料平衡', value: 3},
+    {text: '进厂监控', value: 4},
+    {text: '出厂监控', value: 5},
+
+
+  ]
+}
 
 Vue.prototype.alertWarning = function (mess) {
   this.$message({
@@ -57,6 +70,56 @@ Vue.prototype.confirm = function (mess, callback) {
   })
 }
 
+Vue.prototype.$bugState = function (value) {
+  let BugData = [
+    {text: '待确认', value: 1},
+    {text: '已确认', value: 2},
+    {text: '已开始', value: 3},
+    {text: '延期', value: 4},
+    {text: '完成', value: 5},
+    {text: '关闭', value: 6},
+    {text: '驳回', value: 7},
+  ]
+  if (value) {
+    let text = "";
+    for (let i = 0; i < BugData.length; i++) {
+      let element = BugData[i];
+      if (element.value == value) {
+        text = element.text;
+        break;
+      }
+    }
+    return text;
+  } else {
+    let bugState = {
+      noConfirm: 1,
+      Confirm: 2,
+      Start: 3,
+      Delay: 4,
+      Complete: 5,
+      Close: 6,
+      Reject: 7
+
+
+    }
+    return {
+
+      bugState, BugData
+    }
+  }
+
+
+}
+
+Vue.prototype.$searchModal = function (orderField) {
+  return {
+    pageSize: 10,
+    pageIndex: 1,
+    orderField: orderField,
+    isAsc: 'true',
+    fields: []
+  }
+}
 
 export default new Router({
   mode: 'history',
@@ -73,9 +136,9 @@ export default new Router({
           component: UserInfo
         },
         {
-          path: 'page',
-          name: 'page',
-          component: PageManager
+          path: 'buglist',
+          name: 'BugList',
+          component: BugList
         },
         {
           path: 'role',

@@ -3,7 +3,7 @@
     <el-tabs v-model="activeName">
       <el-tab-pane label="用户管理" name="first">
         <div class="content">
-          <el-form :label-position="labelPosition" label-width="80px" :model="formLabelAlign">
+          <el-form :label-position="labelPosition" label-width="80px" :model="BugModel">
             <el-row>
               <el-col :span="12">
                 <el-form-item label="所属产品">
@@ -26,7 +26,7 @@
 
                   <el-select class="form-control" v-model="BugModel.modularId">
                     <el-option
-                      v-for="item in modularData"
+                      v-for="item in this.modularData()"
                       :key="item.text"
                       :label="item.text"
                       :value="item.value">
@@ -110,7 +110,7 @@
                 <el-form-item label="重现步骤">
                   <el-input
                     type="textarea"
-                    v-mode="BugModel.bugDescribe"
+                    v-model="BugModel.bugDescribe"
                     :rows="2"
                     autosize
                     placeholder="请输入内容"
@@ -140,10 +140,13 @@
       <el-tab-pane label="配置管理" name="second">
         <el-upload
           name="file"
+          v-show="BugModel.bugId>0"
           action="http://localhost:8081/upload/files"
           list-type="picture-card"
           :on-preview="handlePictureCardPreview"
-          :on-remove="handleRemove">
+          :on-remove="handleRemove"
+          :data="fileData"
+          :file-list="imgList">
 
           <i class="el-icon-plus"></i>
         </el-upload>
@@ -167,21 +170,14 @@
     name: 'AddBug',
     components: {BaseForm},
     data() {
+
       return {
+        imgList: [{name: '111', url: 'http://127.0.0.1:8082/5.png'}],
         appData: [{
 
           text: '安庆', value: 1
         }],
-        modularData: [
 
-          {text: '罐区监控', value: 1},
-          {text: '装置监控', value: 2},
-          {text: '物料平衡', value: 3},
-          {text: '进厂监控', value: 4},
-          {text: '出厂监控', value: 5},
-
-
-        ],
         bugType: [
           {text: '界面优化', value: 1},
           {text: '功能错误', value: 2},
@@ -202,7 +198,7 @@
 
 
         BugModel: {
-          bugId: '',
+          bugId: 0,
           bugDescribe: '',
           bugName: '',
           appId: "",
@@ -216,15 +212,33 @@
           bugType: ''
         },
         activeName: 'first',
-        labelPosition: 'right'
-      }
-    }, methods: {
-      saveBug() {
-  let  $this=this;
-         this.postJson('bug/save',this.BugModel,function () {
+        labelPosition: 'right',
 
-             $this.alertSuccess('成功')
-         })
+
+      }
+    },
+    computed: {
+
+      fileData() {
+
+        let bugId = this.BugModel.bugId;
+
+        return {
+          modularId: bugId
+
+        }
+      }
+
+    }
+    ,
+    methods: {
+      saveBug() {
+        let $this = this;
+        this.postJson('bug/save', this.BugModel, function (data) {
+
+          $this.alertSuccess('成功')
+          $this.BugModel = data;
+        })
 
       },
       handleRemove(file, fileList) {

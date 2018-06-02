@@ -14,7 +14,7 @@
               <span slot="title">系统设置</span>
             </template>
             <el-menu-item index="role">角色</el-menu-item>
-            <el-menu-item index="page">页面</el-menu-item>
+            <el-menu-item index="buglist">页面</el-menu-item>
             <el-menu-item index="bug">Bug</el-menu-item>
 
 
