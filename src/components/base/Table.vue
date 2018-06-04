@@ -25,7 +25,6 @@
           :data="tableData"
           @selection-change="handleSelectionChange"
           stripe
-          row-key="roleId"
           style="width: 100%"
           align="center"
           :size="size">
@@ -72,7 +71,7 @@
       </div>
     </div>
 
-    <el-dialog :visible.sync="dialogFormVisible">
+    <el-dialog :visible.sync="dialogFormVisible" :if="dialogFormVisible">
       <base-form ref="form" :filedList="filedList" v-on:submit-form="submitForm" :title="title"
                  :formData="editData"></base-form>
 
@@ -89,7 +88,7 @@
   export default {
     name: 'BaseTable',
     components: {BaseForm},
-    props: ['searchList', 'columns', 'dataQueryUrl', 'filedList', 'dataSaveUrl', 'dataDeleteUrl'],
+    props: ['searchList', 'columns', 'dataQueryUrl', 'filedList', 'dataSaveUrl', 'dataDeleteUrl', 'orderField', 'title'],
     data() {
       let searchModal = {};
       this.searchList.forEach(function (item) {
@@ -99,7 +98,7 @@
 
       return {
         searchModal,
-        title: '新增角色',
+
         editData: {},
         multipleSelection: [],
         size: 'small',
@@ -122,7 +121,7 @@
       }
     }, methods: {
       handleEdit(index, row) {
-        this.title = "修改角色";
+
         let mod = {};
         for (let i = 0; i < this.filedList.length; i++) {
           let element = this.filedList[i];
@@ -134,9 +133,9 @@
 
       },
       handleAdd() {
-        this.dialogFormVisible = true;
-        this.title = "新增角色";
+
         this.editData = null;
+        this.dialogFormVisible = true;
 
 
       },
@@ -191,6 +190,7 @@
         this.postJson(this.dataSaveUrl, model, function (data) {
           $this.alertSuccess('保存成功')
           $this.dialogFormVisible = false
+          $this.editData = data;
           $this.search()
 
         })
@@ -201,14 +201,16 @@
         let searchMod = {
           pageSize: this.pageSize,
           pageIndex: this.pageIndex,
-          orderField: 'roleId',
+          orderField: this.orderField,
           isAsc: 'true',
           fields: []
         };
-        for (var item in this.searchModal) {
-          searchMod.fields.push({field: item, value: this.searchModal[item]});
+        let $this=this;
+        console.log($this.searchModal)
+        this.searchList.forEach(function (item) {
+          searchMod.fields.push({field: item.filed, value: $this.searchModal[item.filed], method: item.method});
+        })
 
-        }
         return searchMod;
 
       },

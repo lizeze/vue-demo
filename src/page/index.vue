@@ -16,6 +16,7 @@
             <el-menu-item index="role">角色</el-menu-item>
             <el-menu-item index="buglist">页面</el-menu-item>
             <el-menu-item index="bug">Bug</el-menu-item>
+            <el-menu-item index="product">产品</el-menu-item>
 
 
           </el-submenu>

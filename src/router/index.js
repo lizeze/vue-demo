@@ -7,6 +7,7 @@ import PageManager from '../page/base/Page'
 import Role from '../page/base/Role'
 import BugInfo from '../page/bug/AddBug'
 import BugList from '../page/bug/BugList'
+import  Product from  '../page/system/product'
 import axios from 'axios'
 import 'element-ui/lib/theme-chalk/index.css';
 import moment from "moment";
@@ -149,6 +150,10 @@ export default new Router({
           path: 'bug',
           name: 'Bug',
           component: BugInfo
+        },{
+          path: 'product',
+          name: 'product',
+          component: Product
         }
       ]
     },

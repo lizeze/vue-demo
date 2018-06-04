@@ -2,7 +2,7 @@
   <div class="form">
     <div class="form-title">
 
-      <h2>{{title}}</h2>
+      <h2> {{setTitle}}</h2>
     </div>
     <div class="form-body">
 
@@ -31,7 +31,6 @@
     name: 'BaseForm',
     props: ['filedList', 'title', 'formData'],
     data() {
-
       return {
 
         model: {}
@@ -41,7 +40,12 @@
     },
     methods: {
       submitForm() {
-        return this.model;
+        let mod = this.model;
+        console.log(mod)
+        // this.$refs.ruleForm.resetFields();
+        console.log(mod)
+
+        return mod;
       },
       resetForm() {
         this.$refs.ruleForm.resetFields();
@@ -51,7 +55,16 @@
 
     },
     computed: {
+      setTitle() {
 
+
+        let pageTitle = this.title;
+        if (this.formData == null||this.formData=={})
+          pageTitle = "新增" + pageTitle;
+        else
+          pageTitle = "修改" + pageTitle;
+        return pageTitle;
+      },
       view() {
         let mod = {};
         this.model = this.formData;
@@ -69,17 +82,7 @@
 
 
     },
-    updated() {
 
-    }, created() {
-
-
-      // alert('ccccc');
-    }
-    , mounted() {
-
-      // alert('mmmm')
-    }
   }
 
 

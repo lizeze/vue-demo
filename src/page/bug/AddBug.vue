@@ -141,6 +141,7 @@
         <el-upload
           name="file"
           v-show="BugModel.bugId>0"
+
           action="http://localhost:8081/upload/files"
           list-type="picture-card"
           :on-preview="handlePictureCardPreview"
