@@ -8,8 +8,19 @@
 
 
       <el-form :model="view" label-width="100px" ref="ruleForm">
-        <el-form-item :label="item.name" :prop="item.filed" v-for="item in filedList" v-if="!item.key">
-          <el-input v-if="!item.show" v-model="model[item.filed]" :placeholder="item.name"></el-input>
+        <el-form-item :label="item.name" :prop="item.filed" v-for="item in filedList" v-if="item.show!=false">
+          <el-input v-if="item.type==1" v-model="model[item.filed]" :placeholder="item.name"></el-input>
+          <span  v-if="item.type==2" >{{item.data}} </span>
+          <el-select v-if="item.type==2" v-model="model[item.filed]" filterable placeholder="请选择">
+            <el-option
+              v-for="option in item.data"
+              :key="option.value"
+              :label="option.text"
+              :value="option.value">
+            </el-option>
+          </el-select>
+
+
         </el-form-item>
 
         <el-form-item>
@@ -41,25 +52,26 @@
     methods: {
       submitForm() {
         let mod = this.model;
-        console.log(mod)
-        // this.$refs.ruleForm.resetFields();
-        console.log(mod)
+
 
         return mod;
       },
       resetForm() {
+        console.log(this.$refs.ruleForm + 'zzz')
         this.$refs.ruleForm.resetFields();
       }
     }, created() {
-      this.resetForm();
 
+    },
+    mounted() {
+      this.resetForm();
     },
     computed: {
       setTitle() {
 
 
         let pageTitle = this.title;
-        if (this.formData == null||this.formData=={})
+        if (this.formData == null || this.formData == {})
           pageTitle = "新增" + pageTitle;
         else
           pageTitle = "修改" + pageTitle;

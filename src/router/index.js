@@ -8,6 +8,7 @@ import Role from '../page/base/Role'
 import BugInfo from '../page/bug/AddBug'
 import BugList from '../page/bug/BugList'
 import  Product from  '../page/system/product'
+import  Module from  '../page/system/Module'
 import axios from 'axios'
 import 'element-ui/lib/theme-chalk/index.css';
 import moment from "moment";
@@ -154,6 +155,10 @@ export default new Router({
           path: 'product',
           name: 'product',
           component: Product
+        },{
+          path: 'module',
+          name: 'module',
+          component: Module
         }
       ]
     },

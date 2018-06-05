@@ -56,5 +56,10 @@
 
   }
 
+   .box-header{
+
+     text-align: left;
+  }
+
 
 </style>

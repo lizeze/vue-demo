@@ -29,13 +29,13 @@
           {name: '描述', filed: 'productDescribe'},
           {name: '创建时间', filed: 'createTime', type: 1}],
 
-        filedList: [{name: 'ID', filed: 'productId', key: true},
-          {name: '产品名称', filed: 'productName', value: ''},
+        filedList: [{name: 'ID', filed: 'productId', show: false},
+          {name: '产品名称', filed: 'productName', value: '',type:1},
           {
             name: '产品描述',
             filed: 'productDescribe',
-            value: ''
-          }, {name: '创建时间', filed: 'createDate', key: true}],
+            value: '',type:1
+          }, {name: '创建时间', filed: 'createDate', show: false}],
         dataQueryUrl: 'product/all',
         dataSaveUrl: 'product/save',
         dataDeleteUrl: 'product/delete'
