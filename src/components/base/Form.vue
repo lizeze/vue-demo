@@ -1,51 +1,36 @@
 <template>
   <div class="form">
     <div class="form-title">
-
       <h2> {{setTitle}}</h2>
     </div>
     <div class="form-body">
-
-
       <el-form :model="view" label-width="100px" ref="ruleForm">
         <el-form-item :label="item.name" :prop="item.filed" v-for="item in filedList" v-if="item.show!=false">
           <el-input v-if="item.type==1" v-model="model[item.filed]" :placeholder="item.name"></el-input>
-          <span  v-if="item.type==2" >{{item.data}} </span>
-          <el-select v-if="item.type==2" v-model="model[item.filed]" filterable placeholder="请选择">
+          <el-select   style="width: 100%" v-if="item.type==2" v-model="model[item.filed]" filterable placeholder="请选择">
             <el-option
-              v-for="option in item.data"
-              :key="option.value"
-              :label="option.text"
-              :value="option.value">
+                       v-for="option in item.data"
+                       :key="option.value"
+                       :label="option.text"
+                       :value="option.value">
             </el-option>
           </el-select>
-
-
         </el-form-item>
-
         <el-form-item>
           <el-button type="primary" v-on:click="$emit('submit-form',submitForm())">保存</el-button>
           <el-button @click="resetForm()">重置</el-button>
         </el-form-item>
       </el-form>
-
-
     </div>
-
   </div>
-
 </template>
 <script>
-
   export default {
-
     name: 'BaseForm',
     props: ['filedList', 'title', 'formData'],
     data() {
       return {
-
         model: {}
-
 
       };
     },
